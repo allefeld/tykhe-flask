@@ -1,0 +1,7 @@
+{
+    "name": "Tykhe",
+    "description": "A web app to assist in the teaching of statistical methods",
+    "repository": "https://github.com/allefeld/tykhe",
+    "logo": "https://raw.githubusercontent.com/allefeld/tykhe/master/app/static/tykhe.svg",
+    "keywords": ["python", "teaching", "statistics"]
+}

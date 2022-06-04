@@ -1,0 +1,40 @@
+<!doctype html>
+<head>
+  <title>Tykhe – Study description – {{ study_object.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='tykhe.svg') }}">
+  <style>
+    body {
+      display: block;
+      grid-template-columns: revert;
+      grid-template-rows: revert;
+    }
+    main {
+      display: block;
+      grid-template-columns: revert;
+      grid-template-rows: revert;
+      column-gap: revert;
+      padding-left: 10px;
+      padding-right: 10px;
+      overflow-y: revert;
+    }
+    div.study {
+      border: none;
+      padding: 0px;
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+{% macro include(file) %}
+{% include file %}
+{% endmacro %}
+<body>
+  <h1>Tykhe: Study description</h1>
+
+  {{ include('_study.html')|indent(2) }}
+
+  <script>
+    window.print();
+  </script>
+</body>

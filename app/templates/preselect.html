@@ -1,0 +1,105 @@
+<!doctype html>
+<head>
+  <title>Preselect parameters – Tykhe</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='tykhe.svg') }}">
+  <script defer src="{{ url_for('static', filename='preselect.js') }}"></script>
+</head>
+
+{% macro include(file) %}
+{% include file %}
+{% endmacro %}
+<body>
+  {{ include('_header.html')|indent(2) }}
+
+  <main>
+    <div class="left">
+      <h1>Preselect parameters</h1>
+
+      <p class="alert">
+        This page is intended for lecturers. If you are a student, ask your
+        lecturer for the correct URL.
+      </p>
+      <p>
+        On this page, you can preselect parameters which are going to determine
+        how the sample requested by a student on subsequent pages is going to
+        be generated.
+      </p>
+      <p>
+        The only required field is <strong>Study</strong>.
+      </p>
+      <p>
+        If the <strong>Sample ID</strong> is specified here, every student will
+        get the same sample; if not, a random Sample ID is generated for each
+        student, leading to different samples.
+      </p>
+      <p>
+        Values for <strong>Sample size</strong> and <strong>File
+        format</strong> specified here are used as pre-selection on subsequent
+        pages, but can be changed by the student.
+      </p>
+      <p>
+        Submitting the form through the <strong>Proceed</strong> button leads
+        to the page intended for students. On that page, you can copy its URL
+        from the browser's address bar and share it with them.
+      </p>
+    </div>
+    
+    <div class="right">
+      <form class="twocolumn" action="/request" method="get">
+        <fieldset>
+          <legend>Study</legend>
+          <select name="study" size="{{ studies|length }}" required>
+{%- for s, so in studies.items() %}
+            <option value="{{ s }}">{{ so.name }}</option>
+{%- endfor %}
+          </select>
+          <p>
+            The research study that is going to be simulated.
+          </p>
+          <p>
+            <a href="/about">[Study descriptions]</a>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sample ID</legend>
+          <input id="sid" type="number" name="sid" min="{{ sid_range[0] }}" max="{{ sid_range[1] }}">
+          <p>
+            This number identifies the sample that is going to be generated.
+            Samples of different size with the same ID have the same initial
+            observations.
+          </p>
+          <p>
+            <a id="random" style="display: none;" href="javascript:randomSID()">[Random Sample ID]</a>
+          </p>
+        </fieldset>
+        
+        <fieldset>
+          <legend>Sample size</legend>
+          <input type="number" name="size" min="2" max="10000">
+          <p>
+            The number of independent observations in the sample.
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>File format</legend>
+          <select name="format" size="{{ formats|length }}">
+{%- for f, fl in formats.items() %}
+            <option value="{{ f }}">{{ fl }}</option>
+{%- endfor %}
+          </select>
+          <p>
+            The format in which the generated sample is going to be provided as
+            a file download.
+          </p>
+        </fieldset>
+      
+        <div class="centered">
+          <button>Proceed</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>

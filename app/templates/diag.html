@@ -1,0 +1,49 @@
+<!doctype html>
+<head>
+  <title>Tykhe – Diagnostics</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='tykhe.svg') }}">
+</head>
+
+{% macro include(file) %}
+{% include file %}
+{% endmacro %}
+<body>
+  {{ include('_header.html')|indent(2) }}
+
+  <main>
+    <div class="left">
+      <h1>Diagnostics</h1>
+
+      <h2>Cache directory</h2>
+<pre>
+$ {{ ls_cache.args|join(' ') }}
+{{ ls_cache.stdout }}
+</pre>
+
+      <h2>Memory</h2>
+<pre>
+$ {{ mem.args|join(' ') }}
+{{ mem.stdout }}
+</pre>
+
+      <h2>Disk space</h2>
+<pre>
+$ {{ disk.args|join(' ') }}
+{{ disk.stdout }}
+</pre>
+    </div>
+
+    <div class="right">
+      <h2>Environment</h2>
+      <table class="env">
+{%- for k, v in env.items() %}
+        <tr>
+          <th>{{ k }}</th>
+          <td>{{ v }}</td>
+        </tr>
+{%- endfor %}
+      </table>
+    </div>
+  </main>
+</body>

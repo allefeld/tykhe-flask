@@ -1,0 +1,72 @@
+<!doctype html>
+<head>
+  <title>Tykhe – Collect sample – {{ study_object.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='tykhe.svg') }}">
+  <script defer src="{{ url_for('static', filename='collect.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='print.js') }}"></script>
+</head>
+
+{% macro include(file) %}
+{% include file %}
+{% endmacro %}
+<body>
+  {{ include('_header.html')|indent(2) }}
+
+  <main>
+    <div class="left">
+      <h1>Collect sample</h1>
+
+      <p>
+        Here the sample is collected, and when it is ready a form appears
+        through which you can download it as a data file.
+      </p>
+      <p>
+        The field <strong>File format</strong> may already be filled in;
+        otherwise you have to select an option.
+      </p>
+      <p>
+        After that, submit the form through the <strong>Download</strong>
+        button.
+      </p>
+      <p>
+        If you use the data for an assignment, you should note in it<br>
+        the <strong>Sample size {{ size }}</strong> and
+        the <strong>Sample ID {{ sid }}</strong>.
+      </p>
+
+      {{ include('_study.html')|indent(6) }}
+    </div>
+
+    <div class="right">
+      <div id="collect" style="display: none;">
+      </div>
+
+      <form id="download" action="/download" method="get">
+        <input id="study" type="hidden" name="study" value="{{ study }}">
+
+        <input id="size" type="hidden" name="size" value="{{ size }}">
+
+        <fieldset>
+          <legend>File format</legend>
+          <select name="format" size="{{ formats|length }}" required>
+{%- for f, fl in formats.items() %}
+            <option value="{{ f }}"{%- if f == format %} selected{%- endif %}>{{ fl }}</option>
+{%- endfor %}
+          </select>
+          <p>
+            The format of the downloaded file. Pick it to match the analysis
+            software you are going to use. Most software packages can open or
+            import csv files.
+          </p>
+        </fieldset>
+    
+        <input type="hidden" name="sid" value="{{ sid }}">
+
+        <div class="centered">
+          <button>Download</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>

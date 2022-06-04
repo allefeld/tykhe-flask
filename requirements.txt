@@ -1,0 +1,7 @@
+flask==2.1.2
+markdown-it-py==2.1.0
+numpy==1.21.6
+pandas==1.4.2
+savReaderWriter==3.4.2
+openpyxl==3.0.9
+gunicorn==20.1.0

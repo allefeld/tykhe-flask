@@ -1,0 +1,22 @@
+<div class="study">
+  <h2>{{ study_object.name }}</h2>
+
+  <p class="short">{{ study_object.short_description|indent(2) }}</p>
+
+  {{ study_object.additional_description|markdown|safe|indent(2) }}
+
+  <table>
+{%- for vn, (vt, vd) in study_object.variables.items() %}
+    <tr>
+      <th><code>{{ vn }}</code></th>
+      <td>
+        <p>{{ vd|indent(8) }}</p>
+{%- set values = study_object.get_values(vn) %}
+{%- if values is not none %}
+        <p>values: {{ values }}</p>
+{%- endif %}
+      </td>
+    </tr>
+{%- endfor %}
+  </table>
+</div>

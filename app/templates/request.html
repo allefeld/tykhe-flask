@@ -1,0 +1,61 @@
+<!doctype html>
+<head>
+  <title>{{ study_object.name }} – Request sample – Tykhe</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='tykhe.svg') }}">
+  <script defer src="{{ url_for('static', filename='print.js') }}"></script>
+</head>
+
+{% macro include(file) %}
+{% include file %}
+{% endmacro %}
+<body>
+  {{ include('_header.html')|indent(2) }}
+
+
+  <main>
+    <div class="left">
+      <h1>Request sample</h1>
+
+      <p>
+        On this page, you can request a sample from a (simulated) population,
+        with data collected according to the study described below.
+      </p>
+      <p>
+        The field <strong>Sample size</strong> may already be filled in;
+        otherwise you have to specify a number.
+      </p>
+      <p>
+        After that, submit the form through the
+        <strong>Collect Sample</strong> button.
+      </p>
+
+      {{ include('_study.html')|indent(6) }}
+    </div>
+
+    <div class="right">
+      <form action="/collect" method="get">
+        <input id=study type="hidden" name="study" value="{{ study }}">
+
+        <fieldset>
+          <legend>Sample size</legend>
+          <input type="number" name="size" {% if size is not none %}value="{{ size }}"{% endif %} min="2" max="10000" required>
+          <p>
+            The number of independent observations in the sample. This is
+            usually the number of participants.
+          </p>
+        </fieldset>
+
+{%- if format is not none %}
+        <input type="hidden" name="format" value="{{ format }}">
+{%- endif %}
+
+        <input type="hidden" name="sid" value="{{ sid }}">
+
+        <div class="centered">
+          <button>Collect Sample</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>

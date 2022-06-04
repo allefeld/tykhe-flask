@@ -1,0 +1,50 @@
+<!doctype html>
+<head>
+  <title>Tykhe – About</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='tykhe.svg') }}">
+</head>
+
+{% macro include(file) %}
+{% include file %}
+{% endmacro %}
+<body>
+  {{ include('_header.html')|indent(2) }}
+
+  <main>
+    <div class="left">
+      {{ include('_about.md')|markdown|safe|indent(6) }}
+
+      <a class="diag" href="/diag">[d]</a>
+    </div>
+
+    <div class="right">
+      <h1>Implemented Studies</h1>
+
+{%- for s, so in studies.items() %}
+
+      <h2>{{ so.name }}</h2>
+
+      <details>
+        <summary>{{ so.short_description|indent(8) }}</summary>
+
+        {{ so.additional_description|markdown|safe|indent(8) }}
+        <table>
+{%- for vn, (vt, vd) in so.variables.items() %}
+          <tr>
+            <th><code>{{ vn }}</code></th>
+            <td>
+              <p>{{ vd|indent(14) }}</p>
+{%- set values = so.get_values(vn) %}
+{%- if values is not none %}
+              <p>values: {{ values|indent(14) }}</p>
+{%- endif %}
+            </td>
+          </tr>
+{%- endfor %}
+        </table>
+      </details>
+{%- endfor %}
+    </div>
+  </main>
+</body>
