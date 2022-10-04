@@ -1,5 +1,6 @@
 from inspect import cleandoc
 import pandas as pd
+import numpy as np
 
 
 class Study:
@@ -166,9 +167,9 @@ class TwoSample (Study):
         return self.NAME + f' (d = {self.d})'
 
 
-class Test (Study):
+class Levels (Study):
 
-    NAME = 'Test: Measurement levels'
+    NAME = 'Measurement levels'
 
     SHORT_DESCRIPTION = 'Variables with different measurement levels.'
 
@@ -177,23 +178,43 @@ class Test (Study):
     @property
     def variables(self):
         return {
-            'group': (
-                pd.CategoricalDtype(self.groups, ordered=False),
-                'nominal variable'),
-            'rating': (
-                pd.CategoricalDtype(self.ratings, ordered=True),
-                'ordinal variable'),
-            'time': (
+            'sex': (
+                pd.CategoricalDtype(self.sex, ordered=False),
+                'biological sex'),
+            'happiness': (
+                pd.CategoricalDtype(self.happiness, ordered=True),
+                'self-rating of happiness'),
+            'colour': (
+                pd.CategoricalDtype(self.colour, ordered=False),
+                'favourite colour'),
+            'height': (
                 float,
-                'scale variable')
+                'body height in cm')
         }
 
     def __init__(self):
-        self.groups = ['control', 'treatment']
-        self.ratings = ['not at all', 'little', 'somewhat', 'very much']
+        self.sex = ['female', 'male']
+        self.happiness = ['very unhappy', 'unhappy', 'neutral',
+                          'happy', 'very happy']
+        self.colour = ['red', 'orange', 'yellow', 'green', 'blue', 'purple',
+                       'black', 'white', 'grey', 'brown']
+        # based on the ominous `diet.csv`
+        self.sex_happiness = np.array([
+            [0.16, 0.17, 0.09, 0.23, 0.35],
+            [0.31, 0.26, 0.14, 0.18, 0.11]])
+        self.sex_lhm = np.array([   # mean and std of log height
+            [5.119, 0.05576],
+            [5.163, 0.06775]])
+        # based on
+        #   <https://www.hotdesign.com/marketing/whats-your-favorite-color/>
+        self.sex_colour = np.array([
+            [0.120, 0.069, 0.060, 0.174, 0.260, 0.170, 0.064, 0.036, 0.032, 0.015],     # noqa E501
+            [0.140, 0.080, 0.046, 0.200, 0.290, 0.090, 0.078, 0.026, 0.035, 0.015]])    # noqa E501
 
     def get_observation(self, rng, index):
-        gi = rng.integers(2)
-        ri = rng.integers(4)
-        x = rng.normal()
-        return [self.groups[gi], self.ratings[ri], x]
+        si = rng.integers(len(self.sex))
+        hi = rng.choice(len(self.happiness), p=self.sex_happiness[si])
+        ci = rng.choice(len(self.colour), p=self.sex_colour[si])
+        height = np.exp(rng.normal(*self.sex_lhm[si]))
+        return [self.sex[si], self.happiness[hi], self.colour[ci], height]
+    

@@ -29,10 +29,10 @@ SID_RANGE = (111_111, 999_999)
 
 # Study class instances for use by the application
 STUDIES = {
+    'levels':           data.Levels(),
     'simon':            data.Simon(),
     'twosample_null':   data.TwoSample(0),
-    'twosample_medium': data.TwoSample(0.5),
-    'test':             data.Test()
+    'twosample_medium': data.TwoSample(0.5)
 }
 
 # supported file formats and labels
