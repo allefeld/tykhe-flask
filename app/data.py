@@ -215,6 +215,5 @@ class Levels (Study):
         si = rng.integers(len(self.sex))
         hi = rng.choice(len(self.happiness), p=self.sex_happiness[si])
         ci = rng.choice(len(self.colour), p=self.sex_colour[si])
-        height = np.exp(rng.normal(*self.sex_lhm[si]))
+        height = np.round(np.exp(rng.normal(*self.sex_lhm[si])))
         return [self.sex[si], self.happiness[hi], self.colour[ci], height]
-    
