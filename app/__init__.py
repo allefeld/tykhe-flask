@@ -286,7 +286,7 @@ def df_to_sav(df, pathname):
     valueLabels = {}                # varName → (value → label)
     for varName in varNames:
         if df[varName].dtype != 'category':
-            # numerical
+            # numerical (interval or ratio scale)
             varTypes[varName] = 0  # numerical
             measureLevels[varName] = 'scale'
         else:
