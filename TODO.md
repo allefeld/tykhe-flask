@@ -1,9 +1,5 @@
 # TODO
 
--   available memory and disk don't work
-    https://stackoverflow.com/questions/12902253/rails-3-heroku-find-out-dynos-memory-usage
-    https://help.heroku.com/TWBM7DL0/how-do-i-measure-current-memory-use-and-max-available-memory-on-a-dyno-in-a-private-space
-
 
 ## future
 
@@ -14,6 +10,21 @@
 -   missing data
 
 -   trial-level data (hierarchical model)
+
+-   additional "studies":
+
+    -   rTMS and depression, within-subject and between-subjects, but properly:
+        depression scale measures depression, not happiness
+        within-subject is more powerful than between-subjects
+        placebo and sequence effects
+    
+    -   sex and gender
+        realistic statistics regarding male / female / intersex
+        and women / men / other identities
+        including possible dependency
+        data maybe from studies in https://www.theparadoxinstitute.com/read/a-response-to-stop-using-phony-science-to-justify-transphobia?s=09
+
+-   look at https://github.com/joke2k/faker & https://github.com/ropensci/charlatan
 
 
 ## obsolete
