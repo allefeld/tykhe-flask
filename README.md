@@ -1,6 +1,6 @@
-# ![](app/static/tykhe.svg) Tykhe
+# ![](app/static/tykhe.svg) Tykhe-Flask
 
-Tykhe is a web app implemented in Python / Flask which allows the user to obtain samples from a simulated study (typically psychological or sociological), intended to be used in the teaching of statistical methods. It is named after the ancient Greek goddess of fortune, and the icon is her cornucopia.
+Tykhe-Flask is a web app implemented in Python / Flask which allows the user to obtain samples from a simulated study (typically psychological or sociological), intended to be used in the teaching of statistical methods. It is named after the ancient Greek goddess of fortune, and the icon is her cornucopia.
 
 The user can select from several different studies, specify sample size and file format, virtually 'collect' a sample, and download the data as a file. In addition, it is possible to specify a 'Sample ID' which determines which data are (pseudo-) randomly generated. This ID is usually randomly generated itself, but can also be specified explicitly to reproduce the same data.
 
